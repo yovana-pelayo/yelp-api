@@ -21,8 +21,11 @@ export default function App() {
   }, []);
 
   const handleChange = async () => {
-    console.log('display search info');
+    const searchData = await fetchBusinesses(zipCode, search);
+    setBusinesses(searchData);
+    // console.log('display search info');
     // TODO -- add event for button click to handle calling fetchBusinesses with zip / search
+    setLoading(false);
   };
   return (
     <div className="App">
@@ -30,11 +33,11 @@ export default function App() {
       <div className="query-form">
         <div className="form-control">
           <label>Zip:</label>
-          <input type="text" placeholder={zipCode} onChange={() => setZipCode('')} />
+          <input type="text" placeholder={zipCode} onChange={(e) => setZipCode(e.target.value)} />
         </div>
         <div className="form-control">
           <label>Query:</label>
-          <input type="text" placeholder={search} onChange={() => setSearch('')} />
+          <input type="text" placeholder={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <button onClick={handleChange}>Search</button>
       </div>

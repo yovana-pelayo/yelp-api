@@ -2,8 +2,8 @@ const fetch = require('node-fetch');
 require('dotenv').config({ path: `.env.development.local` });
 
 exports.handler = async (event) => {
-  const { zip } = event.queryStringParameters.zip;
-  const { search } = event.queryStringParameters.search;
+  const { zip } = event.queryStringParameters;
+  const { search } = event.queryStringParameters;
   console.log('this is the zip', { zip, search });
   console.log(event.queryStringParameters);
   // console.log('this is zipper', { zip });
@@ -20,13 +20,11 @@ exports.handler = async (event) => {
     );
     const data = await resp.json();
     const json = JSON.stringify(data.businesses);
-
     return {
       statusCode: 200,
       body: json,
     };
   } catch (error) {
-    console.log(error);
     return {
       statusCode: 500,
       body: JSON.stringify({ error: 'Failed Retrieving data' }),
